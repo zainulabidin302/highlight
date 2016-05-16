@@ -1,13 +1,30 @@
-import path_helper 
-import json
+import path_helper, json, imp
+
+
+extensions = ""
+with open('extensions.json') as extention:
+	extensions = json.load(extention)
+	
+
+
 
 path_helper.update_path_cache(['/home']) # Update the file in root folder called paths, it contains the list of 
 
+
+
 count = 0
+
 for item in path_helper.get_files_list():
-	
-	if(item.endswith('txt')):
-		count += 1
+	for key, ex in extensions.iteritems():
+		
+		if(item.endswith(tuple(ex))):
+			
+			parser = imp.load_source('{}'.format(key), key)
+
+			res = parser.read_to_string(item)
+			print(res)			
+
+
 	
 
 
