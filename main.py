@@ -19,7 +19,7 @@ for item in path_helper.get_files_list():
 		
 		if(item.endswith(tuple(ex))):
 			
-			parser = imp.load_source('{}'.format(key), key)
+			parser = imp.load_source("reader/"+key+ "/" + key, "reader/"+key+ "/" + key+".py")
 
 			res = parser.read_to_string(item)
 			print(res)			
