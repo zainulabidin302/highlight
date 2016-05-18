@@ -1,6 +1,18 @@
+<<<<<<< HEAD
 import path_helper 
 import sys, os
 import json
+=======
+import path_helper, json, imp
+
+
+extensions = ""
+with open('extensions.json') as extention:
+	extensions = json.load(extention)
+	
+
+
+>>>>>>> 7da394bcc4e4a7e25b2f81428f11591fd41fb60c
 
 
 sys.path.append('./reader')
@@ -28,7 +40,10 @@ def get_type(file) :
 
 
 
+
+
 count = 0
+<<<<<<< HEAD
 t_data = []
 t_sizes = []
 for item in path_helper.get_files_list():
@@ -40,6 +55,21 @@ for item in path_helper.get_files_list():
     res = service.read(item)
     t_sizes.append(os.path.getsize(item))
     t_data.append(res)
+=======
+
+for item in path_helper.get_files_list():
+	for key, ex in extensions.iteritems():
+		
+		if(item.endswith(tuple(ex))):
+			
+			parser = imp.load_source("reader/"+key+ "/" + key, "reader/"+key+ "/" + key+".py")
+
+			res = parser.read_to_string(item)
+			print(res)			
+
+
+	
+>>>>>>> 7da394bcc4e4a7e25b2f81428f11591fd41fb60c
 
 #print(t_data)
 

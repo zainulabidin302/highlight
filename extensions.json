@@ -1,0 +1,27 @@
+{
+
+  "text": [
+    "html",
+    "xhtml",
+    "txt",
+    "conf",
+    "ini",
+    "xml"
+  ],
+  "pdf": [
+    "pdf"
+  ],
+  "word": [
+    "doc",
+    "docx"
+  ],
+  "powerpoint": [
+    "ppt",
+    "pptx"
+  ],
+  "excel": [
+    "xls",
+    "xlsx"
+  ]
+
+}
