@@ -1,7 +1,6 @@
-def read( name):
+
+def read(name):
     doc = ""
-    with open(name, 'r') as f:
-        doc = file.read(f)
-
-
+    with open(name) as f:
+        doc = read(f)
     return doc

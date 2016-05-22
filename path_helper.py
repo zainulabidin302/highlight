@@ -10,7 +10,8 @@ def get_files(path):
 def update_path_cache(paths):
 	tmp = []
 	for item in paths:
-		tmp.extend(get_files(item)) 
+		tmp.extend(get_files(item))
+
 	file = json.dump(tmp, open("paths", "w"))
 
 def get_files_list():

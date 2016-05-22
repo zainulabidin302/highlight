@@ -1,26 +1,35 @@
-from slate import PDF
+"""
+Extract PDF text using PDFMiner. Adapted from
+http://stackoverflow.com/questions/5725278/python-help-using-pdfminer-as-a-library
+"""
 
-def read(file):
-    handle = ''
-    with open(file, 'rb') as f:
-        handle =  PDF(f)
-    return handle
+from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter#process_pdf
+from pdfminer.pdfpage import PDFPage
+from pdfminer.converter import TextConverter
+from pdfminer.layout import LAParams
+from cStringIO import StringIO
 
-def pytest_funcarg__passwd(request):
-    with open('passwd-a.pdf') as f:
-        return PDF(f, 'a')
+def read(pdfname):
 
-def test_basic(doc):
-    assert doc[0] == 'This is a test.\x0c'
+    # PDFMiner boilerplate
+    rsrcmgr = PDFResourceManager()
+    sio = StringIO()
+    codec = 'utf-8'
+    laparams = LAParams()
+    device = TextConverter(rsrcmgr, sio, codec=codec, laparams=laparams)
+    interpreter = PDFPageInterpreter(rsrcmgr, device)
 
-def test_metadata_extraction(doc):
-    assert doc.metadata
+    # Extract text
+    fp = file(pdfname, 'rb')
+    for page in PDFPage.get_pages(fp):
+        interpreter.process_page(page)
+    fp.close()
 
-def test_text_method(doc):
-    assert doc.text() == "This is a test."
+    # Get text from StringIO
+    text = sio.getvalue()
 
-def test_text_method_unclean(doc):
-    assert '\x0c' in doc.text(clean=0)
+    # Cleanup
+    device.close()
+    sio.close()
 
-def test_password(passwd):
-    assert passwd[0] == "Chamber of secrets.\x0c"
+    return text
